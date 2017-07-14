@@ -7,7 +7,7 @@ pipeline {
         stage('Test') {
             steps {
                 withSonarQubeEnv('SonarQube') { //引号里的SonarQube不要改
-                    sh 'mvn clean sonar:sonar'
+                    sh 'mvn -f MachineLearning/pom.xml clean sonar:sonar'
                 }
             }
         }
