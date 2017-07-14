@@ -22,7 +22,7 @@ pipeline {
                 sh 'docker stop ExcellentEngineers_MachineLearning  || true'
                 sh 'docker rm ExcellentEngineers_MachineLearning  || true'
                 sh 'docker run --name ExcellentEngineers_MachineLearning  -p 20000:8080 -d dordoka/tomcat' //端口11111需要修改
-                sh 'docker cp target/MachineLearning.war ExcellentEngineers_MachineLearning:/opt/tomcat/webapps/' //制品路径需要修改
+                sh 'docker cp MachineLearning/target/MachineLearning.war ExcellentEngineers_MachineLearning:/opt/tomcat/webapps/' //制品路径需要修改
             }
         }
     }
