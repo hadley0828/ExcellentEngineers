@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn package'
+                sh 'mvn -f MachineLearning/pom.xml package'
                 archive 'target/MachineLearning.war' //制品路径需要修改
             }
         }
