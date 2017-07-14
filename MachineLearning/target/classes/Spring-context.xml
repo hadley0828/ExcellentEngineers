@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 扫描业务层组件 -->
+	<context:component-scan base-package="bl,data,DAO"></context:component-scan>
+
+<!-- 导入属性文件 
+	<context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+	
+	配置C3P0数据源
+	<bean id ="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name ="user" value="yinywf"></property>
+		<property name ="password" value="${password}"></property>
+		<property name ="driverClass" value="${driverClass}"></property>
+		<property name ="jdbcUrl" value="${proquantUrl}"></property>
+		<property name ="jdbcUrl" value="${proquantUrl}"></property>
+		
+		<property name ="maxPoolSize" value="${maxPoolSize}"></property>
+		<property name ="initialPoolSize" value="${initPoolSize}"></property>
+	</bean>
+	
+	配置Hibernate的SessionFactory实例：通过Spring提供的LocalSessionFactory进行配置
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		配置数据源属性
+		<property name="dataSource" ref = "dataSource"></property>
+		配置Hibernate配置文件的位置及名称
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		配置Hibernate映射文件的位置及名称，可以使用通配符
+	  	<property name="mappingLocations" value="classpath:hibernate/*.hbm.xml"></property>
+
+	</bean>
+	
+	
+	配置Spring的JDBCTemplate
+	<bean id="jdbcTamplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	配置事务管理器
+	<bean id="JDBC" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		 <property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		 <property name="sessionFactory" ref = "sessionFactory"></property>
+	</bean>
+	
+	启用事务注解
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager" >  
+      <tx:attributes>  
+        <tx:method name="*" propagation="REQUIRED"/>  
+      </tx:attributes>  
+    </tx:advice>  
+	<aop:config expose-proxy="true">
+		<aop:pointcut id="txPointcut" expression="execution(data)"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" order="500"/>
+	</aop:config>  -->
+</beans>
