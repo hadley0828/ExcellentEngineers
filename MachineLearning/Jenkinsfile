@@ -14,7 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn -f MachineLearning/pom.xml package'
-                archive 'target/MachineLearning.war' //制品路径需要修改
+                archive 'MachineLearning/target/MachineLearning.war' //制品路径需要修改
             }
         }
         stage('Deploy') {
