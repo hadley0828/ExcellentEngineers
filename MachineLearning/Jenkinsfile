@@ -19,10 +19,10 @@ pipeline {
         }
         stage('Deploy') {
             steps { //所有的group1_demo需要修改
-                sh 'docker stop ExcellentEngineers  || true'
-                sh 'docker rm ExcellentEngineers  || true'
-                sh 'docker run --name ExcellentEngineers  -p 23333:8080 -d dordoka/tomcat' //端口11111需要修改
-                sh 'docker cp target/MachineLearning.war ExcellentEngineers:/opt/tomcat/webapps/' //制品路径需要修改
+                sh 'docker stop ExcellentEngineers_MachineLearning  || true'
+                sh 'docker rm ExcellentEngineers_MachineLearning  || true'
+                sh 'docker run --name ExcellentEngineers_MachineLearning  -p 23333:8080 -d dordoka/tomcat' //端口11111需要修改
+                sh 'docker cp target/MachineLearning.war ExcellentEngineers_MachineLearning:/opt/tomcat/webapps/' //制品路径需要修改
             }
         }
     }
