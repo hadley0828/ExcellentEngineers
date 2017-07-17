@@ -17,12 +17,12 @@
                 <span>已输入{{wordNum}}字</span>
                 <textarea v-on:keydown="countWordNum" id="input" rows="10" cols="80"></textarea>
             </div>
-            <textarea rows="10" cols="80" disabled="disabled"></textarea>
+            <textarea id="output" rows="10" cols="80" disabled="disabled"></textarea>
         </div>
         <div>
             <select>
-                <option>英文转中文</option>
-                <option>中文转英文</option>
+                <option id="option1">英文转中文</option>
+                <option id="option2">中文转英文</option>
             </select>
             <button>翻译</button>
         </div>

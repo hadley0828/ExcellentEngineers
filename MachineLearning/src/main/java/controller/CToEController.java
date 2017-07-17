@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/ctoe")
 public class CToEController {
+    String string;
     @RequestMapping(value = "/translate", method = RequestMethod.POST)
-    public String translate(String string){
+    public String translate(){
         return null;
     }
 }
