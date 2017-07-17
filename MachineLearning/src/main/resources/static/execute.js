@@ -1,9 +1,9 @@
 /**
  * Created by Administrator on 2017/7/17.
  */
-function translate() {
+function translateexecute() {
     var text = document.getElementById("input").textContent
-    if($("#option1").textContent == 英文转中文) {
+    if(document.getElementById("s").value == "2") {
         $.ajax({
             type: 'POST',
             url: 'etoc/translate',

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="index.css" rel="stylesheet">
+    <script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.3.2/vue.min.js"></script>
+    <script type="text/javascript" src="execute.js"></script>
 </head>
 <body>
 <div>
@@ -20,11 +22,11 @@
             <textarea id="output" rows="10" cols="80" disabled="disabled"></textarea>
         </div>
         <div>
-            <select>
-                <option id="option1">英文转中文</option>
-                <option id="option2">中文转英文</option>
+            <select id="s">
+                <option value="1">英文转中文</option>
+                <option value="2">中文转英文</option>
             </select>
-            <button>翻译</button>
+            <button onclick="translateexecute()">翻译</button>
         </div>
     </div>
 </div>
