@@ -19,8 +19,10 @@ import static bl.TranslateBL.Translation.CHSTOEN;
 public class CToEController {
     String string;
     @RequestMapping(value = "/translate", method = RequestMethod.POST)
+    @ResponseBody
     public String translate(){
-        TranslateBLService translateBLService = new TranslateBL();
-        return translateBLService.translate(string,CHSTOEN);
+//        TranslateBLService translateBLService = new TranslateBL();
+        return "Success";
+//        return translateBLService.translate(string,CHSTOEN);
     }
 }
