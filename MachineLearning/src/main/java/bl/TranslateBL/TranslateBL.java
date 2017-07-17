@@ -1,4 +1,4 @@
-package bl;
+package bl.TranslateBL;
 
 import blservice.TranslateBLService;
 
@@ -7,8 +7,10 @@ import blservice.TranslateBLService;
  */
 public class TranslateBL implements TranslateBLService {
     Jython jython=new Jython();
+
     @Override
-    public String translate(String oriLanguage) {
-        return jython.runPythonTrans(oriLanguage);
+    public String translate(String oriLanguage, Translation translation) {
+        return jython.runPythonTrans(oriLanguage,translation);
     }
 }
+
