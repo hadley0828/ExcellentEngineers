@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="index.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/vue/2.3.2/vue.min.js"></script>
+</head>
+<body>
+<div>
+    <div id="head">七元一次方程组</div>
+    <div id="content">
+        <div>
+            <div id="input-area">
+                <img v-on:mouseenter="clearNotice" v-on:mouseleave="removeClearNotice" v-on:click="clearInput" src="clear.png">
+                <div id="clear-notice">清空内容</div>
+                <span>已输入{{wordNum}}字</span>
+                <textarea v-on:keydown="countWordNum" id="input" rows="10" cols="80"></textarea>
+            </div>
+            <textarea rows="10" cols="80" disabled="disabled"></textarea>
+        </div>
+        <div>
+            <select>
+                <option>英文转中文</option>
+                <option>中文转英文</option>
+            </select>
+            <button>翻译</button>
+        </div>
+    </div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
