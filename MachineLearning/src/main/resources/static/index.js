@@ -1,6 +1,6 @@
 /**
  * Created by fourtwo42 on 2017/7/14.
- */
+ **/
 'use strict';
 (function(){
     var input = new Vue({
@@ -29,21 +29,15 @@
                 this.wordNum = document.getElementById('input').value.length;
                 if(this.wordNum == 0){
                     this.selectedLanguage = 'auto';
-                    var select = document.getElementById('select-language');
-                    select.options[0].selected = true;
                 }
                 else {
                         var content = document.getElementById('input').value.substr(0, 1);
                         var re = new RegExp("[\\u4E00-\\u9FFF]+", "g");
                         if (re.test(content)) {
                             this.selectedLanguage = '2';
-                            var select = document.getElementById('select-language');
-                            select.options[2].selected = true;
                         }
                         else {
                             this.selectedLanguage = '1';
-                            var select = document.getElementById('select-language');
-                            select.options[1].selected = true;
                         }
                 }
             }
