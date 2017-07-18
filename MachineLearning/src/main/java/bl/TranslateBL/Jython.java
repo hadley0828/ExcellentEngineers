@@ -5,6 +5,7 @@ import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by 朱应山 on 2017/7/14.
@@ -14,15 +15,21 @@ public class Jython {
         String pythonPath="";
         switch (translation){
             case CHSTOEN:
-                pythonPath="src/main/python/CHSTOEN.py";
+                pythonPath="MachineLearning/src/main/python/CHSTOEN.py";
                 break;
             case ENTOCHS:
-                pythonPath="src/main/python/ENTOCHS.py";
+                pythonPath="MachineLearning/src/main/python/ENTOCHS.py";
                 break;
             default:
                 return "failed";
         }
-        System.out.print("lujing"+(new File(pythonPath)).exists());
+        File directory = new File("");//设定为当前文件夹
+        try {
+            System.out.println(directory.getCanonicalPath());//获取标准的路径
+            System.out.println(directory.getAbsolutePath());//获取绝对路径
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String tarLanguage="";
         PythonInterpreter interpreter = new PythonInterpreter();
         interpreter.execfile(pythonPath);
