@@ -21,8 +21,8 @@ public class CToEController {
     @RequestMapping(value = "/translate", method = RequestMethod.POST)
     @ResponseBody
     public String translate(){
-//        TranslateBLService translateBLService = new TranslateBL();
-        return "Success";
-//        return translateBLService.translate(string,CHSTOEN);
+        TranslateBLService translateBLService = new TranslateBL();
+//        return "Success";
+        return translateBLService.translate("我吃了一个苹果",CHSTOEN);
     }
 }

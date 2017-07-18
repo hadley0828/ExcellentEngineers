@@ -4,6 +4,8 @@ import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
 
+import java.io.File;
+
 /**
  * Created by 朱应山 on 2017/7/14.
  */
@@ -20,6 +22,7 @@ public class Jython {
             default:
                 return "failed";
         }
+        System.out.print("lujing"+(new File(pythonPath)).exists());
         String tarLanguage="";
         PythonInterpreter interpreter = new PythonInterpreter();
         interpreter.execfile(pythonPath);
