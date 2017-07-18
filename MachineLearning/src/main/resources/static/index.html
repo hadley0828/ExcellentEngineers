@@ -17,19 +17,19 @@
                 <img v-on:mouseenter="clearNotice" v-on:mouseleave="removeClearNotice" v-on:click="clearInput" src="clear.png">
                 <div id="clear-notice">清空内容</div>
                 <span>已输入{{wordNum}}字</span>
-                <textarea v-on:keydown="countWordNum" id="input" rows="10" cols="80"></textarea>
+                <textarea id="input" v-on:input="countWordNum" rows="10"></textarea>
             </div>
-            <textarea id="output" rows="10" cols="80" disabled="disabled"></textarea>
+            <textarea rows="10" disabled="disabled"></textarea>
         </div>
         <div>
-            <select id="s">
-                <option value="1">英文转中文</option>
-                <option value="2">中文转英文</option>
+            <select id="s" v-model="selectedLanguage">
+                <option v-for="language in languages" v-bind:value="language.value">{{language.text}}</option>
             </select>
             <button onclick="translateexecute()">翻译</button>
         </div>
     </div>
 </div>
+
 <script src="index.js"></script>
 </body>
 </html>

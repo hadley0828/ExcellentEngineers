@@ -2,6 +2,7 @@ body{
     margin:0;
 }
 
+
 #head{
     padding:10px 100px;
     background-color: rgba(0,0,0,0.49803);
@@ -11,48 +12,54 @@ body{
 }
 
 #content{
-    padding: 30px 100px;
+    padding: 30px 0;
+}
+
+#content > div{
+    width: 80%;
+    margin:0 auto;
 }
 
 #content > div:first-of-type{
     margin-bottom:30px;
 }
 
-#content > div:first-of-type > div{
-    margin-right: 80px;
+#input-area{
+    width:45%;
+    margin-right: 5%;
     display: inline-block;
     position: relative;
 }
 
-#content > div:first-of-type > div > img{
+#input-area > img{
     width: 23px;
     height:23px;
     position: absolute;
-    left:533px;
-    top:5px;
+    left:94%;
+    top:5%;
     cursor: pointer;
 }
 
-#content > div:first-of-type > div > div{
+#input-area > img:hover{
+    background-color: gainsboro;
+}
+
+#input-area > div{
     width: 27px;
     position: absolute;
-    left:531px;
-    top:30px;
+    left:94%;
+    top:18%;
     font-size: 13px;
     color: #6d6d6d;
     visibility: hidden;
 }
 
-#content > div:first-of-type > div > span{
+#input-area > span{
     position: absolute;
-    left:490px;
-    top:154px;
+    left:87%;
+    top:88%;
     font-size: 13px;
     color: #6d6d6d;
-}
-
-#content > div:first-of-type > div > img:hover{
-    background-color: gainsboro;
 }
 
 textarea{
@@ -61,11 +68,13 @@ textarea{
 }
 
 #input{
-    padding-right: 37px;
+    padding-right: 10%;
+    width: 90%;
 }
 
-#content > div:first-of-type > textarea:last-of-type{
+#content > div:first-of-type > textarea{
     background-color: rgb(241, 241, 241);
+    width:45%;
 }
 
 select{
