@@ -2,14 +2,15 @@
  * Created by Administrator on 2017/7/17.
  */
 function translateexecute() {
-    var text = document.getElementById("input").textContent
-    if(document.getElementById("s").value == "2") {
-        $.post('/etoc/translate', function (data) {
-            console.log(data)
+    var text = $("#input").val()
+    var option = $("#s option:selected")
+    if(option.text() == "英文转中文") {
+        $.post('/etoc/translate',{input: text}, function (data) {
+
         })
     }else{
-        $.post('/ctoe/translate', function (data) {
-            console.log(data)
+        $.post('/ctoe/translate',{input: text}, function (data) {
+            
         })
     }
 }

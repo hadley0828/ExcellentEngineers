@@ -4,10 +4,7 @@ import bl.TranslateBL.TranslateBL;
 import blservice.TranslateBLService;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import static bl.TranslateBL.Translation.CHSTOEN;
 
@@ -17,12 +14,10 @@ import static bl.TranslateBL.Translation.CHSTOEN;
 @Controller
 @RequestMapping(value = "/ctoe")
 public class CToEController {
-    String string;
     @RequestMapping(value = "/translate", method = RequestMethod.POST)
     @ResponseBody
-    public String translate(){
+    public String translate(@RequestParam("input") String input){
         TranslateBLService translateBLService = new TranslateBL();
-//        return "Success";
-        return translateBLService.translate("我吃了一个苹果",CHSTOEN);
+        return translateBLService.translate(input,CHSTOEN);
     }
 }
