@@ -2,17 +2,54 @@ body{
     margin:0;
 }
 
-
 #head{
-    padding:10px 100px;
-    background-color: rgba(0,0,0,0.49803);
-    height:50px;
+    height:500px;
+    width:100%;
+    background-image: url(polygon.png);
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    background-position: 0% 0%;
+    background-size: cover;
+    box-shadow: inset 0px -5px 11px -6px rgba(0, 0, 0, 0.25);
+    z-index:2;
+}
+
+#head span{
+    z-index: 3;
     color: white;
-    line-height: 50px;
+    font-size: 27px;
+    text-align: center;
+    display: block;
+    font-family: 幼圆;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+}
+
+#head > div{
+    position: absolute;
+    width: 16%;
+    left: 50%;
+    bottom: 0;
+    margin-bottom: -7%;
+    margin-left: -10%;
+    z-index:20;
+}
+
+#head img{
+    width: 100%;
+    border-radius: 50%;
+    border: 10px solid #fff;
+    vertical-align: middle;
+    box-sizing: border-box;
 }
 
 #content{
-    padding: 30px 0;
+    padding: 180px 0;
+    transition: 0.5s;
 }
 
 #content > div{
@@ -21,7 +58,7 @@ body{
 }
 
 #content > div:first-of-type{
-    margin-bottom:30px;
+    margin-bottom:50px;
 }
 
 #input-area{
