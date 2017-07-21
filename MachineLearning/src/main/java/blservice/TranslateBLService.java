@@ -7,7 +7,7 @@ import bl.TranslateBL.Translation;
  */
 public interface TranslateBLService {
     /**
-     * 翻译的方法，在这之中调用jython
+     * 翻译的方法，在这之中调用方法实现
      * @param oriLanguage 原始语言
      * @return  翻译的目标的语言
      */
