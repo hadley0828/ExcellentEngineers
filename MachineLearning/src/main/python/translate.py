@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 # Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+
 
 """Binary for training translation models and decoding from them.
 
@@ -73,6 +76,7 @@ tf.app.flags.DEFINE_boolean("self_test", False,
                             "Run a self-test if this is set to True.")
 tf.app.flags.DEFINE_boolean("use_fp16", False,
                             "Train using fp16 instead of fp32.")
+tf.app.flags.DEFINE_string("input_squence",None,"input squence to be translated")
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -259,36 +263,37 @@ def decode():
 
     # Decode from standard input.
     sys.stdout.write("> ")
-    sys.stdout.flush()
-    sentence = sys.stdin.readline()
-    while sentence:
-      # Get token-ids for the input sentence.
-      token_ids = data_utils.sentence_to_token_ids(tf.compat.as_bytes(sentence), en_vocab,tokenizer=True)
-      # Which bucket does it belong to?
-      bucket_id = len(_buckets) - 1
-      for i, bucket in enumerate(_buckets):
-        if bucket[0] >= len(token_ids):
-          bucket_id = i
-          break
+    sentence = sys.argv[1]
+    sys.stdout.write(sentence)
+
+    # Get token-ids for the input sentence.
+    token_ids = data_utils.sentence_to_token_ids(tf.compat.as_bytes(sentence), en_vocab,tokenizer=True)
+    # Which bucket does it belong to?
+    bucket_id = len(_buckets) - 1
+    for i, bucket in enumerate(_buckets):
+      if bucket[0] >= len(token_ids):
+        bucket_id = i
+        break
       else:
         logging.warning("Sentence truncated: %s", sentence)
 
-      # Get a 1-element batch to feed the sentence to the model.
-      encoder_inputs, decoder_inputs, target_weights = model.get_batch(
+    # Get a 1-element batch to feed the sentence to the model.
+    encoder_inputs, decoder_inputs, target_weights = model.get_batch(
           {bucket_id: [(token_ids, [])]}, bucket_id)
-      # Get output logits for the sentence.
-      _, _, output_logits = model.step(sess, encoder_inputs, decoder_inputs,
+    # Get output logits for the sentence.
+    _, _, output_logits = model.step(sess, encoder_inputs, decoder_inputs,
                                        target_weights, bucket_id, True)
-      # This is a greedy decoder - outputs are just argmaxes of output_logits.
-      outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
-      # If there is an EOS symbol in outputs, cut them at that point.
-      if data_utils.EOS_ID in outputs:
-        outputs = outputs[:outputs.index(data_utils.EOS_ID)]
+    # This is a greedy decoder - outputs are just argmaxes of output_logits.
+    outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
+    # If there is an EOS symbol in outputs, cut them at that point.
+    if data_utils.EOS_ID in outputs:
+      outputs = outputs[:outputs.index(data_utils.EOS_ID)]
       # Print out French sentence corresponding to outputs.
-      print(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs]))
-      print("> ")
-      sys.stdout.flush()
-      sentence = sys.stdin.readline()
+    print("> ")
+    print(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs]))
+    sys.stdout.flush()
+
+
 
 
 def self_test():
