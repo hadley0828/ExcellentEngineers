@@ -8,11 +8,20 @@ import util.SyncBuff;
  */
 public class TranslateBL implements TranslateBLService {
     CMDRunner runner=new CMDRunner();
+    private SyncBuff syncBuff = SyncBuff.getInstance();
 
     @Override
     public String translate(String oriLanguage, Translation translation) {
-        SyncBuff.getInstance().setBuff(oriLanguage);
-        return "success";
+
+        syncBuff.setBuff(oriLanguage);
+        String result;
+        while (true) {
+            if (syncBuff.hasOutput()) {
+                result = syncBuff.getOutput();
+                break;
+            }
+        }
+        return result;
 //        return runner.cmdrun(oriLanguage,translation);
         //return jython.runPythonTrans(oriLanguage,translation);
     }

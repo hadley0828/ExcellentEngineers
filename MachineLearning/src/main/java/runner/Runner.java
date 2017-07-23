@@ -50,7 +50,7 @@ public class Runner {
                         continue;
                     out.println(syncBuff.getBuff());
                     try {
-                        System.out.println("echo: " + in.readLine());
+                        syncBuff.setOutput(in.readLine());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
