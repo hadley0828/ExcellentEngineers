@@ -41,6 +41,7 @@ import sys
 import time
 import logging
 import time
+import socket
 
 import numpy as np
 from six.moves import xrange  # pylint: disable=redefined-builtin
@@ -249,6 +250,8 @@ def train():
 
 
 def decode():
+
+
   with tf.Session() as sess:
     # Create model and load parameters.
     model = create_model(sess, True)
@@ -258,43 +261,52 @@ def decode():
     en_vocab_path = os.path.join(FLAGS.data_dir,
                                  "vocab%d.from" % FLAGS.from_vocab_size)
     fr_vocab_path = os.path.join(FLAGS.data_dir,
-                                 "vocab%d.to" % FLAGS.to_vocab_size)
+                                 "vocab%d.to" %    FLAGS.to_vocab_size)
     en_vocab, _ = data_utils.initialize_vocabulary(en_vocab_path)
     _, rev_fr_vocab = data_utils.initialize_vocabulary(fr_vocab_path)
 
-
-
     # Decode from standard input.
-    sys.stdout.write("> ")
-    sentence = sys.argv[1]
-    sys.stdout.write(sentence)
-
-    # Get token-ids for the input sentence.
-    token_ids = data_utils.sentence_to_token_ids(tf.compat.as_bytes(sentence), en_vocab,tokenizer=True)
-    # Which bucket does it belong to?
-    bucket_id = len(_buckets) - 1
-    for i, bucket in enumerate(_buckets):
-      if bucket[0] >= len(token_ids):
-        bucket_id = i
+    print('start decode')
+    HOST = ''  # Symbolic name meaning all available interfaces
+    PORT = 8081  # Arbitrary non-privileged port
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((HOST, PORT))
+    s.listen(1)
+    conn, addr = s.accept()
+    print('Connected by', addr)
+    while True:
+      sentence = conn.recv(1024)
+      if not sentence:
         break
+      print(str(sentence, 'utf-8').rstrip())
+
+
+      # Get token-ids for the input sentence.
+      token_ids = data_utils.sentence_to_token_ids(tf.compat.as_bytes(sentence), en_vocab,tokenizer=True)
+      # Which bucket does it belong to?
+      bucket_id = len(_buckets) - 1
+      for i, bucket in enumerate(_buckets):
+        if bucket[0] >= len(token_ids):
+          bucket_id = i
+          break
       else:
         logging.warning("Sentence truncated: %s", sentence)
 
-    # Get a 1-element batch to feed the sentence to the model.
-    encoder_inputs, decoder_inputs, target_weights = model.get_batch(
+      # Get a 1-element batch to feed the sentence to the model.
+      encoder_inputs, decoder_inputs, target_weights = model.get_batch(
           {bucket_id: [(token_ids, [])]}, bucket_id)
-    # Get output logits for the sentence.
-    _, _, output_logits = model.step(sess, encoder_inputs, decoder_inputs,
+      # Get output logits for the sentence.
+      _, _, output_logits = model.step(sess, encoder_inputs, decoder_inputs,
                                        target_weights, bucket_id, True)
-    # This is a greedy decoder - outputs are just argmaxes of output_logits.
-    outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
-    # If there is an EOS symbol in outputs, cut them at that point.
-    if data_utils.EOS_ID in outputs:
-      outputs = outputs[:outputs.index(data_utils.EOS_ID)]
+      # This is a greedy decoder - outputs are just argmaxes of output_logits.
+      outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
+      # If there is an EOS symbol in outputs, cut them at that point.
+      if data_utils.EOS_ID in outputs:
+        outputs = outputs[:outputs.index(data_utils.EOS_ID)]
       # Print out French sentence corresponding to outputs.
-    sys.stdout.write("\n")
-    sys.stdout.write(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs]))
-    sys.stdout.flush()
+      print(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs]))
+      conn.sendall(bytes(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs])+'\n','utf-8'))
+    conn.close()
 
 
 
@@ -328,4 +340,5 @@ def main(_):
     decode()
 
 if __name__ == "__main__":
+
   tf.app.run()
