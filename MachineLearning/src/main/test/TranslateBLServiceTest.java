@@ -11,7 +11,7 @@ public class TranslateBLServiceTest {
     @Test
     public void translate() throws Exception {
         TranslateBLService bl=new TranslateBL();
-        String result=bl.translate("1245632", Translation.CHSTOEN);
+        String result=bl.translate("美国", Translation.CHSTOEN);
         System.out.println(result);
     }
     @Test

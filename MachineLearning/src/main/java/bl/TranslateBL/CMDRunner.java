@@ -37,8 +37,15 @@ public class CMDRunner {
 
 
             String line;
+            int count = 2;
             while ((line = in.readLine()) != null) {
-                System.out.println(line);
+                if(count > 0){
+                    count--;
+                }else{
+                    System.out.println(line);
+                    tarLanguage = line;
+                    break;
+                }
             }
 
 

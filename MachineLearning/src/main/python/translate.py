@@ -40,6 +40,7 @@ import random
 import sys
 import time
 import logging
+import time
 
 import numpy as np
 from six.moves import xrange  # pylint: disable=redefined-builtin
@@ -261,6 +262,8 @@ def decode():
     en_vocab, _ = data_utils.initialize_vocabulary(en_vocab_path)
     _, rev_fr_vocab = data_utils.initialize_vocabulary(fr_vocab_path)
 
+
+
     # Decode from standard input.
     sys.stdout.write("> ")
     sentence = sys.argv[1]
@@ -289,8 +292,8 @@ def decode():
     if data_utils.EOS_ID in outputs:
       outputs = outputs[:outputs.index(data_utils.EOS_ID)]
       # Print out French sentence corresponding to outputs.
-    print("> ")
-    print(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs]))
+    sys.stdout.write("\n")
+    sys.stdout.write(" ".join([tf.compat.as_str(rev_fr_vocab[output]) for output in outputs]))
     sys.stdout.flush()
 
 
