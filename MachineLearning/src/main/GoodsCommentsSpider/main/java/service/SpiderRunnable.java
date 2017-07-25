@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,7 +78,12 @@ public class SpiderRunnable extends TimerTask{
 				continue;
 			}
 			if (!goodUrl.startsWith("https://www.amazon.com")) {
-				goodUrl = goodUrl.substring(goodUrl.indexOf("url=")+4);
+				try {
+					goodUrl = URLDecoder.decode(goodUrl.substring(goodUrl.indexOf("url=")+4), "utf-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			System.out.println("Running : " + name);
 			daoImpl.insertByJDBC(spideComment(goodUrl, name), keyword);
