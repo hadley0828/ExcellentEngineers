@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TimerTask;
@@ -62,6 +63,9 @@ public class SpiderRunnable extends TimerTask{
 
 	public void spideList() {
 		Document document = spide(url);
+		if (document==null) {
+			return;
+		}
 		Elements goodlist = document.select("a[class=a-link-normal s-access-detail-page  s-color-twister-title-link a-text-normal]");
 		//LinkedList<GoodComment> list = new LinkedList<>();
 		List<String> unique = new ArrayList<>();
@@ -70,6 +74,9 @@ public class SpiderRunnable extends TimerTask{
 			String goodUrl = element.attr("href");
 			if (unique.contains(name)) {
 				continue;
+			}
+			if (!goodUrl.startsWith("https://www.amazon.com")) {
+				goodUrl = "https://www.amazon.com"+goodUrl;
 			}
 			System.out.println("Running : " + name);
 			daoImpl.insertByJDBC(spideComment(goodUrl, name), keyword);
@@ -91,7 +98,7 @@ public class SpiderRunnable extends TimerTask{
 				return spide(httpurl);
 			}else{
 				System.out.println("放弃连接");
-				errorLog(keyword+" : "+httpurl);
+				errorLog(new Date()+keyword+" : "+httpurl);
 				return null;
 			}
 		}
@@ -105,7 +112,7 @@ public class SpiderRunnable extends TimerTask{
 				return spide(httpurl);
 			}else{
 				System.out.println("放弃连接");
-				errorLog(keyword+" : "+httpurl);
+				errorLog(new Date()+keyword+" : "+httpurl);
 				return null;
 			}
 			
@@ -135,6 +142,9 @@ public class SpiderRunnable extends TimerTask{
 	private List<GoodComment> spideComment(String url, String goodName){
 		List<GoodComment> result = new LinkedList<GoodComment>();
 		Document document =  spide(url);
+		if (document==null) {
+			return result;
+		}
 		String commentUrl = "https://www.amazon.com"+document.select("a[data-hook=see-all-reviews-link-foot]").first().attr("href").replaceAll("recent", "helpful")+"&filterByStar=";
 		for (int i = 0;i<5;i++) {
 			result.addAll(spideCommentByStars(i, commentUrl,goodName));
@@ -148,6 +158,9 @@ public class SpiderRunnable extends TimerTask{
 		List<GoodComment> result = new LinkedList<GoodComment>();
 		String starUrl = commentUrl+=stars[star];
 		Document document = spide(starUrl);
+		if (document==null) {
+			return result;
+		}
 		Elements comments = document.select("span[data-hook=review-body]");
 		for (Element comment : comments) {
 			GoodComment goodComment = new GoodComment(goodName,0,null,comment.text(),star+1);
@@ -157,9 +170,12 @@ public class SpiderRunnable extends TimerTask{
 		return result;
 		
 	}
-	void spideToFile() {
-		String url ="https://www.amazon.com/BLU-R1-HD-Exclusive-Lockscreen/product-reviews/B01H2E0J5M/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=avp_only_reviews&sortBy=helpful&filterByStar=one_star"; 
+	private void spideToFile() {
+		String url ="https://www.amazon.com/s/ref=sr_pg_1?page=1&keywords=Cell+Phones"; 
 		Document document = spide(url);
+		if (document==null) {
+			return;
+		}
 		File file = new File("amazon.html");
 		
 		try {
@@ -190,7 +206,7 @@ public class SpiderRunnable extends TimerTask{
 		}
 	}
 	public static void main(String[] args) {
-		new SpiderRunnable("Cell Phones", 30).spideList();
-//		new SpiderRunnable("Cell Phones", 30).spideToFile();
+	//	new SpiderRunnable("Cell Phones", 30).spideList();
+		new SpiderRunnable("Cell Phones", 30).spideToFile();
 	}
 }
