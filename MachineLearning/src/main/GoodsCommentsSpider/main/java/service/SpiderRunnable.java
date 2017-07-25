@@ -76,7 +76,7 @@ public class SpiderRunnable extends TimerTask{
 				continue;
 			}
 			if (!goodUrl.startsWith("https://www.amazon.com")) {
-				goodUrl = "https://www.amazon.com"+goodUrl;
+				goodUrl = goodUrl.substring(goodUrl.indexOf("url=")+4);
 			}
 			System.out.println("Running : " + name);
 			daoImpl.insertByJDBC(spideComment(goodUrl, name), keyword);
@@ -171,7 +171,9 @@ public class SpiderRunnable extends TimerTask{
 		
 	}
 	private void spideToFile() {
-		String url ="https://www.amazon.com/s/ref=sr_pg_1?page=1&keywords=Cell+Phones"; 
+		String url ="/gp/slredirect/picassoRedirect.html/ref=pa_sp_btf_aps_sr_pg1_1?ie=UTF8&adId=A00142563I00DJ5IXP7S0&url=https://www.amazon.com/Portable-Bluetooth-Wireless-Charging-Compatible/dp/B01D1X1DIA/ref%3Dsr_1_26/136-8046842-5395102%3Fie%3DUTF8%26qid%3D1501000484%26sr%3D8-26-spons%26keywords%3DCell%2BPhones%26psc%3D1&qualifier=1501000483&id=7897138827262364&widgetName=sp_btf";
+		url = url.substring(url.indexOf("url=")+4);
+		System.out.println(url);
 		Document document = spide(url);
 		if (document==null) {
 			return;
