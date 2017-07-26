@@ -10,28 +10,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div>
-    <div id="head">
+<div id="content">
+    <div class="page">
+        <div id="head">
+            <div>
+                <span>七元一次方程组</span>
+                <img src="img/photo.png">
+            </div>
+        </div>
         <div>
-            <span>七元一次方程组</span>
-            <img src="photo.png">
+            <div id="function">
+                <a href="#trans-page">
+                    <div class="function-item" v-on:mouseenter="transHover" v-on:mouseleave="transLeave">
+                        <img id="trans" src="img/translate_white.png">
+                        <span>中英翻译</span>
+                    </div>
+                </a>
+                <a href="#eval-page">
+                    <div class="function-item" v-on:mouseenter="evalHover" v-on:mouseleave="evalLeave">
+                        <img id="eval" src="img/star_white.png">
+                        <span>产品评估</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-    <div id="content">
+    <div id="trans-page" class="page function-page">
         <div>
-            <div id="input-area">
-                <img v-on:mouseenter="clearNotice" v-on:mouseleave="removeClearNotice" v-on:click="clearInput" src="clear.png">
-                <div id="clear-notice">清空内容</div>
+            <span>中英翻译</span>
+            <div class="input-area">
+                <img v-on:mouseenter="clearNotice" v-on:mouseleave="removeClearNotice" v-on:click="clearInput" src="img/clear.png">
+                <div id="trans-clear-notice">清空内容</div>
                 <span>已输入{{wordNum}}字</span>
-                <textarea id="input" v-on:input="countWordNum" rows="10"></textarea>
+                <textarea class="input" id="trans-input" v-on:input="countWordNum" rows="10"></textarea>
             </div>
-            <textarea id="output" rows="10" disabled="disabled"></textarea>
+            <textarea id="trans-output" rows="10" disabled="disabled"></textarea>
         </div>
         <div>
             <select id="s" v-model="selectedLanguage">
                 <option v-for="language in languages" v-bind:value="language.value">{{language.text}}</option>
             </select>
             <button onclick="translateexecute()">翻译</button>
+        </div>
+    </div>
+    <div id="eval-page" class="page function-page">
+        <div>
+            <span>产品评估</span>
+            <div class="input-area">
+                <img v-on:mouseenter="clearNotice" v-on:mouseleave="removeClearNotice" v-on:click="clearInput" src="img/clear.png">
+                <div id="eval-clear-notice">清空内容</div>
+                <span>已输入{{wordNum}}字</span>
+                <textarea class="input" id="eval-input" v-on:input="countWordNum" rows="10"></textarea>
+            </div>
+            <div id="eval-output"></div>
+        </div>
+        <div>
+            <button>打分</button>
         </div>
     </div>
 </div>
