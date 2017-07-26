@@ -7,7 +7,7 @@ import util.SyncBuff;
  * Created by 朱应山 on 2017/7/14.
  */
 public class TranslateBL implements TranslateBLService {
-    CMDRunner runner=new CMDRunner();
+    //CMDRunner runner=new CMDRunner();
     private SyncBuff syncBuff = SyncBuff.getInstance();
 
     @Override
