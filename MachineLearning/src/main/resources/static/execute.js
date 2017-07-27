@@ -14,3 +14,10 @@ function translateexecute() {
         })
     }
 }
+function comment(){
+    var text = $("#eval-input").val()
+    $.post('/etoc/translate',{evalinput: text}, function (data) {
+        console.log(data)
+        document.getElementById('eval-output').value = data
+    })
+}
