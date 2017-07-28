@@ -188,5 +188,9 @@ button:hover{
 #eval-output{
     display: inline-block;
     width:45%;
-    height: 120px;
+    height: 140px;
+}
+
+#eval-output > img{
+    height: 140px;
 }
