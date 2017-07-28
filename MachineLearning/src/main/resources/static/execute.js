@@ -17,7 +17,16 @@ function translateexecute() {
 function comment(){
     var text = $("#eval-input").val()
     $.post('/comment/score',{evalinput: text}, function (data) {
-        console.log(data)
-        document.getElementById('eval-output').value = data
+        if(data == 1) {
+            document.getElementById('eval-output').innerHTML = '<img src="../static/img/1.png">'
+        }else if(data == 2){
+            document.getElementById('eval-output').innerHTML = '<img src="../static/img/2.png">'
+        }else if(data == 3){
+            document.getElementById('eval-output').innerHTML = '<img src="../static/img/3.png">'
+        }else if(data == 4){
+            document.getElementById('eval-output').innerHTML = '<img src="../static/img/4.png">'
+        }else{
+            document.getElementById('eval-output').innerHTML = '<img src="../static/img/5.png">'
+        }
     })
 }

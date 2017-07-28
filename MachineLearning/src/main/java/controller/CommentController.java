@@ -21,12 +21,16 @@ public class CommentController {
         int result = 0;
         CommentBLService commentBLService = new CommentBLServiceImpl();
         Comment comment = commentBLService.comment(evalinput);
-        if(comment == Comment.BAD){
+        if(comment == Comment.POOR){
             result = 1;
-        }else if(comment == Comment.MEDIUM){
+        }else if(comment == Comment.BAD){
             result = 2;
-        }else if(comment == Comment.HIGH){
+        }else if(comment == Comment.MEDIUM){
             result = 3;
+        }else if(comment == Comment.HIGH){
+            result = 4;
+        }else {
+            result = 5;
         }
 
         return result;
