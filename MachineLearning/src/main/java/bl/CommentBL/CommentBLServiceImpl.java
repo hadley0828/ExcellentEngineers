@@ -7,9 +7,9 @@ import util.SyncBuff;
  * Created by 朱应山 on 2017/7/25.
  */
 public class CommentBLServiceImpl implements CommentBLService {
-    private SyncBuff syncBuff = SyncBuff.getInstance();
+    private SyncBuff syncBuff = SyncBuff.getCommentInst();
     @Override
-    public Comment comment(String comment) {
+    public String comment(String comment) {
         syncBuff.setBuff(comment);
         String result;
         while (true) {
@@ -18,6 +18,6 @@ public class CommentBLServiceImpl implements CommentBLService {
                 break;
             }
         }
-        return Comment.valueOf(result);
+        return result;
     }
 }

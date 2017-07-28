@@ -280,7 +280,6 @@ def decode():
         break
       print(str(sentence, 'utf-8').rstrip())
 
-
       # Get token-ids for the input sentence.
       token_ids = data_utils.sentence_to_token_ids(tf.compat.as_bytes(sentence), en_vocab,tokenizer=True)
       # Which bucket does it belong to?

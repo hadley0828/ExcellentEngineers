@@ -8,7 +8,7 @@ import util.SyncBuff;
  */
 public class TranslateBL implements TranslateBLService {
     //CMDRunner runner=new CMDRunner();
-    private SyncBuff syncBuff = SyncBuff.getInstance();
+    private SyncBuff syncBuff = SyncBuff.getTransInst();
 
     @Override
     public String translate(String oriLanguage, Translation translation) {

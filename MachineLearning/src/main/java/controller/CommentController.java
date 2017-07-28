@@ -1,6 +1,5 @@
 package controller;
 
-import bl.CommentBL.Comment;
 import bl.CommentBL.CommentBLServiceImpl;
 import blservice.CommentBLService;
 import org.springframework.stereotype.Controller;
@@ -20,19 +19,9 @@ public class CommentController {
     public int Score(@RequestParam("evalinput") String evalinput){
         int result = 0;
         CommentBLService commentBLService = new CommentBLServiceImpl();
-        Comment comment = commentBLService.comment(evalinput);
-        if(comment == Comment.POOR){
-            result = 1;
-        }else if(comment == Comment.BAD){
-            result = 2;
-        }else if(comment == Comment.MEDIUM){
-            result = 3;
-        }else if(comment == Comment.HIGH){
-            result = 4;
-        }else {
-            result = 5;
-        }
+        String comment = commentBLService.comment(evalinput);
 
+        result = Integer.parseInt(comment);
         return result;
     }
 }

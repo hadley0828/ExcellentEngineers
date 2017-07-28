@@ -43,8 +43,45 @@ public class Runner {
                     System.exit(1);
                 }
 
+                SyncBuff syncBuff = SyncBuff.getTransInst();
+                while (true) {
+                    if (!syncBuff.hasBuff())
+                        continue;
+                    out.println(syncBuff.getBuff());
+                    try {
+                        syncBuff.setOutput(in.readLine());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
 
-                SyncBuff syncBuff = SyncBuff.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String serverHostname = "localhost";
+
+                Socket echoSocket = null;
+                PrintWriter out = null;
+                BufferedReader in = null;
+
+                try {
+                    // echoSocket = new Socket("taranis", 7);
+                    echoSocket = new Socket(serverHostname, 8082);
+                    out = new PrintWriter(echoSocket.getOutputStream(), true);
+                    in = new BufferedReader(new InputStreamReader(
+                            echoSocket.getInputStream()));
+                } catch (UnknownHostException e) {
+                    System.err.println("Don't know about host: " + serverHostname);
+                    System.exit(1);
+                } catch (IOException e) {
+                    System.err.println("Couldn't get I/O for "
+                            + "the connection to: " + serverHostname);
+                    System.exit(1);
+                }
+
+                SyncBuff syncBuff = SyncBuff.getCommentInst();
                 while (true) {
                     if (!syncBuff.hasBuff())
                         continue;

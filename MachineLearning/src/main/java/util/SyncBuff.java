@@ -7,10 +7,15 @@ public class SyncBuff {
         buff = "";
         output = "";
     }
-    private static final SyncBuff instance = new SyncBuff();
+    private static final SyncBuff TRANS_INST = new SyncBuff();
+    private static final SyncBuff COMMENT_INST = new SyncBuff();
 
-    public static SyncBuff getInstance() {
-        return instance;
+    public static SyncBuff getTransInst() {
+        return TRANS_INST;
+    }
+
+    public static SyncBuff getCommentInst() {
+        return COMMENT_INST;
     }
 
     public String getBuff() {
