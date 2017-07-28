@@ -17,16 +17,17 @@ function translateexecute() {
 function comment(){
     var text = $("#eval-input").val()
     $.post('/comment/score',{evalinput: text}, function (data) {
+        console.log(data)
         if(data == 1) {
-            document.getElementById('eval-output').innerHTML = '<img src="../static/img/1.png">'
+            document.getElementById('eval-output').innerHTML = '<img src="/img/1.png" height="120" width="100" />'
         }else if(data == 2){
-            document.getElementById('eval-output').innerHTML = '<img src="../static/img/2.png">'
+            document.getElementById('eval-output').innerHTML = '<img src="/img/2.png" height="120" width="100" />'
         }else if(data == 3){
-            document.getElementById('eval-output').innerHTML = '<img src="../static/img/3.png">'
+            document.getElementById('eval-output').innerHTML = '<img src="/img/3.png" height="120" width="100" />'
         }else if(data == 4){
-            document.getElementById('eval-output').innerHTML = '<img src="../static/img/4.png">'
+            document.getElementById('eval-output').innerHTML = '<img src="/img/4.png" height="120" width="100" />'
         }else{
-            document.getElementById('eval-output').innerHTML = '<img src="../static/img/5.png">'
+            document.getElementById('eval-output').innerHTML = '<img src="/img/5.png" height="120" width="100" />'
         }
     })
 }
