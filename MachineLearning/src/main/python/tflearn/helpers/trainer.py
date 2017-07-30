@@ -138,16 +138,16 @@ class Trainer(object):
             # Saver for restoring a model (With exclude variable list)
             all_vars = variables.get_all_variables()
             excl_vars = tf.get_collection(tf.GraphKeys.EXCL_RESTORE_VARS)
-            to_restore = [item for item in all_vars
-                          if check_restore_tensor(item, excl_vars)]
+            to_restore = [ite1_resources for ite1_resources in all_vars
+                          if check_restore_tensor(ite1_resources, excl_vars)]
             self.restorer = tf.train.Saver(
                 var_list=to_restore,
                 max_to_keep=max_checkpoints,
                 keep_checkpoint_every_n_hours=keep_checkpoint_every_n_hours,
                 allow_empty=True)
             # A second Saver, that only restore trainable variables
-            to_restore_trainvars = [item for item in tf.trainable_variables()
-                                    if check_restore_tensor(item, excl_vars)]
+            to_restore_trainvars = [ite1_resources for ite1_resources in tf.trainable_variables()
+                                    if check_restore_tensor(ite1_resources, excl_vars)]
             self.restorer_trainvars = tf.train.Saver(
                 var_list=to_restore_trainvars,
                 max_to_keep=max_checkpoints,

@@ -62,8 +62,8 @@ tf.app.flags.DEFINE_integer("size", 256, "Size of each model layer.")
 tf.app.flags.DEFINE_integer("num_layers", 2, "Number of layers in the model.")
 tf.app.flags.DEFINE_integer("from_vocab_size", 50000, "English vocabulary size.")
 tf.app.flags.DEFINE_integer("to_vocab_size", 50000, "Chinese vocabulary size.")
-tf.app.flags.DEFINE_string("data_dir", "/Users/loohaze/Downloads/en-zh", "Data directory")
-tf.app.flags.DEFINE_string("train_dir", "/Users/loohaze/Downloads/en-zh/train", "Training directory.")
+tf.app.flags.DEFINE_string("data_dir", "None", "Data directory")
+tf.app.flags.DEFINE_string("train_dir", "None", "Training directory.")
 tf.app.flags.DEFINE_string("from_train_data", None, "Training data.")
 tf.app.flags.DEFINE_string("to_train_data", None, "Training data.")
 tf.app.flags.DEFINE_string("from_dev_data", None, "Training data.")
@@ -336,7 +336,7 @@ def main(_):
   elif FLAGS.decode:
     decode()
   else:
-    decode()
+    train()
 
 if __name__ == "__main__":
 

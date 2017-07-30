@@ -33,8 +33,8 @@ def get_summary(stype, tag, value=None, collection_key=None,
         The summary `Tensor`.
 
     """
-    summ = next((item for item in tf.get_collection("summary_tags") if
-                 item["tag"] == tag), None)
+    summ = next((ite1_resources for ite1_resources in tf.get_collection("summary_tags") if
+                 ite1_resources["tag"] == tag), None)
 
     if not summ:
         if value is None:
@@ -270,5 +270,5 @@ def summary_exists(tag):
 
     """
     return next(
-        (item['tensor'] for item in tf.get_collection("summary_tags") if
-         item["tag"] == tag), None)
+        (ite1_resources['tensor'] for ite1_resources in tf.get_collection("summary_tags") if
+         ite1_resources["tag"] == tag), None)

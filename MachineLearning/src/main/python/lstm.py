@@ -29,16 +29,25 @@ import data_utils
 
 file_train_X = 'trainX'
 file_train_Y = 'trainY'
+vocabulary_Path = ''
+data_Path = ''
+comment_train_set_Path = ''
+comment_set_Path = ''
+token_comment_set = ''
+
+PKL_PATH = ''
+MODEL_PATH = ''
+
 
 def data_process():
-    data_utils.create_vocabulary(vocabulary_path='vocab40000', data_path='comment_train_set.txt',
-                                 max_vocabulary_size=40000, tokenizer=False)
-    data_utils.data_to_token_ids(data_path='comment_set.txt', target_path='token_comment_set',
-                                 vocabulary_path='vocab40000', tokenizer=False)
+    #data_utils.create_vocabulary(vocabulary_path=vocabulary_Path, data_path=comment_train_set_Path,
+    #                             max_vocabulary_size=40000, tokenizer=False)
+    #data_utils.data_to_token_ids(data_path=comment_set_Path, target_path=token_comment_set,
+    #                             vocabulary_path=vocabulary_Path, tokenizer=False)
     # data_utils.data_to_token_ids(data_path='comment_test_set.txt',target_path='testX',vocabulary_path='vocab40000',tokenizer=False)
-    print('end')
-    # IMDB Dataset loading
-    train, test, _ = imdb.load_data(path='amazon.pkl', n_words=40000,
+    #print('end')
+    # Amazon Dataset loading
+    train, test, _ = imdb.load_data(path=PKL_PATH, n_words=40000,
                                     valid_portion=0.1)
     trainX, trainY = train
     testX, testY = test
@@ -60,7 +69,7 @@ def data_process():
     return trainX,trainY,testX,testY
 
 
-def networdk_building():
+def network_building():
     # Network building
     net = tflearn.input_data([None, 300])
     net = tflearn.embedding(net, input_dim=40000, output_dim=128)
@@ -73,18 +82,18 @@ def networdk_building():
 def train():
     # Training
     trainX,trainY,testX,testY = data_process()
-    net = networdk_building()
+    net = network_building()
     model = tflearn.DNN(net, tensorboard_verbose=0)
     model.fit(trainX, trainY, validation_set=(testX, testY), show_metric=True,
               batch_size=32)
-    model.save('ite2.model')
+    model.save(MODEL_PATH)
 
 def decode():
     # Decode
-    net = networdk_building()
+    net = network_building()
     model = tflearn.DNN(net, tensorboard_verbose=0)
-    model.load('/Users/loohaze/Documents/SummerCourse/ExcellentEngineers/MachineLearning/src/main/python/ite2.model')
-    en_vocab, _ = data_utils.initialize_vocabulary('/Users/loohaze/Documents/SummerCourse/ExcellentEngineers/MachineLearning/src/main/python/vocab40000')
+    model.load(MODEL_PATH)
+    en_vocab, _ = data_utils.initialize_vocabulary(vocabulary_Path)
     #text = 'The paper is great. However, it comes glued and to start the roll there is quite a bit of waste. Perhaps, you can find a way to package it. Thanks'
 
 
@@ -123,8 +132,6 @@ def decode():
                 score = i
         print(score)
         conn.sendall(bytes(" ".join(str(score))+'\n','utf-8'))
-
-
 
 
 decode()
